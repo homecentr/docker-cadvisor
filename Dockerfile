@@ -1,15 +1,11 @@
 FROM gcr.io/google-containers/cadvisor:v0.34.0 as cadvisor
-FROM homecentr/base:1.0.0 as base
 
-FROM alpine:3.11.3
+FROM homecentr/base:2.0.0-alpine
 
 ENV CADVISOR_ARGS="-logtostderr"
 
 # Copy cAdvisor binaries
 COPY --from=cadvisor / /
-
-# Copy S6 overlay
-COPY --from=base / /
 
 # Copy S6 scripts
 COPY ./fs/ /
