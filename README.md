@@ -52,4 +52,4 @@ The container supports privilege drop. Even though the container starts as root,
 
 :warning: Do not change the container user directly using the `user` Docker compose property or using the `--user` argument. This would break the privilege drop logic.
 
-:bulb: To grant a user the permission to read Docker socket, you can add them to the docker group which is automatically created as a part of the Docker installaction.
+:bulb: To grant a user the permission to read Docker socket, you can add them to the docker group which is automatically created as a part of the Docker installation.
