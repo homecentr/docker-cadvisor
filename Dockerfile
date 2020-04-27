@@ -1,4 +1,4 @@
-FROM gcr.io/google-containers/cadvisor:v0.34.0 as cadvisor
+FROM gcr.io/google-containers/cadvisor:v0.36.0 as cadvisor
 
 FROM homecentr/base:2.0.0-alpine
 
