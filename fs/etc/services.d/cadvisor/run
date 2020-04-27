@@ -1,3 +1,5 @@
 #!/usr/bin/with-contenv sh
 
-exec s6-setuidgid "$PUID:$PGID" /usr/bin/cadvisor $CADVISOR_ARGS
+s6-setuidgid nonroot
+
+exec /usr/bin/cadvisor $CADVISOR_ARGS

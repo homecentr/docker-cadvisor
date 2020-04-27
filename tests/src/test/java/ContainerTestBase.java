@@ -1,3 +1,4 @@
+import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.slf4j.Logger;
@@ -11,23 +12,30 @@ public abstract class ContainerTestBase {
 
     private static GenericContainer _container;
 
-    @BeforeClass
-    public static void setUp() {
-        String dockerImageTag = System.getProperty("image_tag", "homecentr/cadvisor");
+    protected void startContainer() {
+        startContainer("", "");
+    }
+
+    protected void startContainer(String uid, String gid) {
+        String dockerImageTag = System.getProperty("image_tag");
 
         logger.info("Tested Docker image tag: {}", dockerImageTag);
 
-        _container = new GenericContainer<>(System.getProperty("image_tag", dockerImageTag))
+        _container = new GenericContainer<>(dockerImageTag)
+                .withEnv("PUID", uid)
+                .withEnv("PGID", gid)
                 .waitingFor(Wait.forHealthcheck());
 
         _container.start();
         _container.followOutput(new Slf4jLogConsumer(logger));
     }
 
-    @AfterClass
-    public static void cleanUp() {
-        _container.stop();
-        _container.close();
+    @After
+    public void cleanUp() {
+        if(_container != null) {
+            _container.stop();
+            _container.close();
+        }
     }
 
     protected GenericContainer getContainer() {
