@@ -1,17 +1,26 @@
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
-public class CadvisorContainerShould extends ContainerTestBase {
+public abstract class CadvisorContainerTests {
+
+  protected abstract ContainerController getController();
+
+  @Test
+  public void notProduceErrorOutput() {
+    assertFalse(getController().hasErrorOutput());
+  }
+
   @Test
   public void listenOnWebUiPort() throws IOException {
     URL root = new URL(String.format("http://%s:%d",
-    getContainer().getContainerIpAddress(),
-    getContainer().getMappedPort(8080)));
+            getController().getContainer().getContainerIpAddress(),
+            getController().getContainer().getMappedPort(8080)));
 
     HttpURLConnection connection = (HttpURLConnection)root.openConnection();
     connection.connect();
@@ -22,8 +31,8 @@ public class CadvisorContainerShould extends ContainerTestBase {
   @Test
   public void returnMetrics() throws IOException {
     URL root = new URL(String.format("http://%s:%d/metrics",
-    getContainer().getContainerIpAddress(),
-    getContainer().getMappedPort(8080)));
+          getController().getContainer().getContainerIpAddress(),
+          getController().getContainer().getMappedPort(8080)));
 
     HttpURLConnection connection = (HttpURLConnection)root.openConnection();
     connection.connect();
@@ -34,8 +43,8 @@ public class CadvisorContainerShould extends ContainerTestBase {
   @Test
   public void returnSuccessOnHealthCheckEndpoint() throws IOException {
     URL root = new URL(String.format("http://%s:%d/healthz",
-    getContainer().getContainerIpAddress(),
-    getContainer().getMappedPort(8080)));
+            getController().getContainer().getContainerIpAddress(),
+            getController().getContainer().getMappedPort(8080)));
 
     HttpURLConnection connection = (HttpURLConnection)root.openConnection();
     connection.connect();
