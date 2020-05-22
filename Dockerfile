@@ -1,6 +1,6 @@
 FROM gcr.io/google-containers/cadvisor:v0.36.0 as cadvisor
 
-FROM homecentr/base:2.0.0-alpine
+FROM homecentr/base:2.3.0-alpine
 
 ENV CADVISOR_ARGS="-logtostderr"
 
