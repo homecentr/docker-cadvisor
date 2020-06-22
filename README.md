@@ -1,11 +1,10 @@
-[![Project status](https://img.shields.io/badge/Project%20status-stable%20%26%20actively%20maintaned-green.svg)](https://github.com/homecentr/docker-cadvisor/graphs/commit-activity) 
-[![](https://img.shields.io/github/issues-raw/homecentr/docker-cadvisor/bug?label=open%20bugs)](https://github.com/homecentr/docker-cadvisor/labels/bug) 
-[![](https://images.microbadger.com/badges/version/homecentr/cadvisor.svg)](https://hub.docker.com/repository/docker/homecentr/cadvisor)
-[![](https://img.shields.io/docker/pulls/homecentr/cadvisor.svg)](https://hub.docker.com/repository/docker/homecentr/cadvisor) 
-[![](https://img.shields.io/docker/image-size/homecentr/cadvisor/latest)](https://hub.docker.com/repository/docker/homecentr/cadvisor)
+[![Project status](https://badgen.net/badge/project%20status/stable%20%26%20actively%20maintaned?color=green)](https://github.com/homecentr/docker-cadvisor/graphs/commit-activity) [![](https://badgen.net/github/label-issues/homecentr/docker-cadvisor/bug?label=open%20bugs&color=green)](https://github.com/homecentr/docker-cadvisor/labels/bug) [![](https://badgen.net/github/release/homecentr/docker-cadvisor)](https://hub.docker.com/repository/docker/homecentr/cadvisor)
+[![](https://badgen.net/docker/pulls/homecentr/cadvisor)](https://hub.docker.com/repository/docker/homecentr/cadvisor) 
+[![](https://badgen.net/docker/size/homecentr/cadvisor)](https://hub.docker.com/repository/docker/homecentr/cadvisor)
 
 ![CI/CD on master](https://github.com/homecentr/docker-cadvisor/workflows/CI/CD%20on%20master/badge.svg)
 ![Regular Docker image vulnerability scan](https://github.com/homecentr/docker-cadvisor/workflows/Regular%20Docker%20image%20vulnerability%20scan/badge.svg)
+
 
 
 # HomeCentr - cAdvisor
@@ -31,7 +30,7 @@ services:
 
 | Name | Default value | Description |
 |------|---------------|-------------|
-| PUID | 7077 | UID of the user cadvisor should be running as. The UID must have sufficient rights to read from the Docker socket. |
+| PUID | 7077 | UID of the user cadvisor should be running as. The UID must have sufficient rights to read from the Docker socket and the mounted directories (e.g. /var/lib/docker). |
 | PGID | 7077 | GID of the user cadvisor should be running as. You must set the PUID if you want to set the PGID variable. |
 | CADVISOR_ARGS | -logtostderr | Command line arguments to cadvisor executable. By default the logs are redirected to the container output |
 
