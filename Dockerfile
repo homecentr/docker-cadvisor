@@ -1,15 +1,15 @@
 FROM gcr.io/google-containers/cadvisor:v0.36.0 as cadvisor
 
-FROM homecentr/base:2.0.0-alpine
+FROM homecentr/base:2.4.3-alpine
 
 ENV CADVISOR_ARGS="-logtostderr"
 
 RUN apk --no-cache add \
-      libc6-compat=1.1.24-r2 \
-      device-mapper=2.02.186-r0 \
-      findutils=4.7.0-r0 && \
-    apk --no-cache add thin-provisioning-tools=0.7.1-r3 --repository http://dl-3.alpinelinux.org/alpine/edge/main/
-
+      libc6-compat=1.1.24-r9 \
+      device-mapper=2.02.186-r1 \
+      findutils=4.7.0-r0 \
+      thin-provisioning-tools=0.7.1-r3
+      
 # Copy cAdvisor binaries
 COPY --from=cadvisor /usr/bin/cadvisor /usr/bin/cadvisor
 
