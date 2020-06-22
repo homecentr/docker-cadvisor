@@ -1,54 +1,33 @@
+import io.homecentr.testcontainers.containers.GenericContainerEx;
+import io.homecentr.testcontainers.containers.HttpResponse;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
+import static helpers.ContainerLogsUtils.hasErrorOutputExceptKnownErrors;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 public abstract class CadvisorContainerTests {
 
-  protected abstract ContainerController getController();
+  protected abstract GenericContainerEx getContainer();
 
   @Test
   public void notProduceErrorOutput() {
-    assertFalse(getController().hasErrorOutput());
+    assertFalse(hasErrorOutputExceptKnownErrors(getContainer()));
   }
 
   @Test
   public void listenOnWebUiPort() throws IOException {
-    URL root = new URL(String.format("http://%s:%d",
-            getController().getContainer().getContainerIpAddress(),
-            getController().getContainer().getMappedPort(8080)));
+    HttpResponse response = getContainer().makeHttpRequest(8080, "/");
 
-    HttpURLConnection connection = (HttpURLConnection)root.openConnection();
-    connection.connect();
-
-    assertEquals(200,  connection.getResponseCode());
+    assertEquals(200,  response.getResponseCode());
   }
 
   @Test
   public void returnMetrics() throws IOException {
-    URL root = new URL(String.format("http://%s:%d/metrics",
-          getController().getContainer().getContainerIpAddress(),
-          getController().getContainer().getMappedPort(8080)));
+    HttpResponse response = getContainer().makeHttpRequest(8080, "/metrics");
 
-    HttpURLConnection connection = (HttpURLConnection)root.openConnection();
-    connection.connect();
-
-    assertEquals(200,  connection.getResponseCode());
-  }
-
-  @Test
-  public void returnSuccessOnHealthCheckEndpoint() throws IOException {
-    URL root = new URL(String.format("http://%s:%d/healthz",
-            getController().getContainer().getContainerIpAddress(),
-            getController().getContainer().getMappedPort(8080)));
-
-    HttpURLConnection connection = (HttpURLConnection)root.openConnection();
-    connection.connect();
-
-    assertEquals(200,  connection.getResponseCode());
+    assertEquals(200,  response.getResponseCode());
   }
 }
