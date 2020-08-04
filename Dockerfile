@@ -9,7 +9,7 @@ RUN apk --no-cache add \
       device-mapper=2.02.186-r1 \
       findutils=4.7.0-r0 \
       thin-provisioning-tools=0.7.1-r3
-      
+
 # Copy cAdvisor binaries
 COPY --from=cadvisor /usr/bin/cadvisor /usr/bin/cadvisor
 
